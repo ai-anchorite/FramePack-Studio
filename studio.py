@@ -47,7 +47,8 @@ prompt_embedding_cache = {}
 # Import from modules
 from modules.video_queue import VideoJobQueue, JobStatus
 from modules.prompt_handler import parse_timestamped_prompt
-from modules.interface import create_interface, format_queue_status
+from modules.ui.queue import format_queue_status
+from modules.interface import create_interface
 from modules.settings import Settings
 from modules import DUMMY_LORA_NAME # Import the constant
 from modules.pipelines.metadata_utils import create_metadata

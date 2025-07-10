@@ -1,0 +1,207 @@
+.short-import-box, .short-import-box > div {
+    min-height: 40px !important;
+    height: 40px !important;
+}
+/* Image container styling - more aggressive approach */
+.contain-image, .contain-image > div, .contain-image > div > img {
+    object-fit: contain !important;
+}
+
+#non-mirrored-video {
+    transform: scaleX(-1) !important;
+}
+
+/* Target all images in the contain-image class and its children */
+.contain-image img,
+.contain-image > div > img,
+.contain-image * img {
+    object-fit: contain !important;
+    width: 100% !important;
+    height: 60vh !important;
+    max-height: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Additional selectors to override Gradio defaults */
+.gradio-container img,
+.gradio-container .svelte-1b5oq5x,
+.gradio-container [data-testid="image"] img {
+    object-fit: contain !important;
+}
+
+/* Toolbar styling */
+#fixed-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1000;
+    background: #333;
+    color: #fff;
+    padding: 0px 10px; /* Reduced top/bottom padding */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive toolbar title */
+.toolbar-title {
+    font-size: 1.4rem;
+    margin: 0;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Toolbar Patreon link */
+.toolbar-patreon {
+    margin: 0 0 0 20px;
+    color: white;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    display: inline-block;
+}
+.toolbar-patreon a {
+    color: white;
+    text-decoration: none;
+}
+.toolbar-patreon a:hover {
+    text-decoration: underline;
+}
+
+/* Toolbar Version number */
+.toolbar-version {
+    margin: 0 15px; /* Space around version */
+    color: white;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* Responsive design for screens */
+@media (max-width: 1147px) {
+    .toolbar-patreon, .toolbar-version { /* Hide both on smaller screens */
+        display: none;
+    }
+    .footer-patreon, .footer-version { /* Show both in footer on smaller screens */
+        display: inline-block !important; /* Ensure they are shown */
+    }
+    #fixed-toolbar {
+        gap: 4px !important; /* Reduce gap for screens <= 1024px */
+    }
+    #fixed-toolbar > div:first-child { /* Target the first gr.Column (Title) */
+        min-width: fit-content !important; /* Override Python-set min-width */
+        flex-shrink: 0 !important; /* Prevent title column from shrinking too much */
+    }
+}
+
+@media (min-width: 1148px) {
+    .footer-patreon, .footer-version { /* Hide both in footer on larger screens */
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .toolbar-title {
+        font-size: 1.1rem;
+        max-width: 150px;
+    }
+    #fixed-toolbar {
+        padding: 3px 6px;
+        gap: 4px;
+    }
+    .toolbar-text {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 510px) {
+    #toolbar-ram-col, #toolbar-vram-col, #toolbar-gpu-col {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .toolbar-title {
+        font-size: 1rem;
+        max-width: 120px;
+    }
+    #fixed-toolbar {
+        padding: 2px 4px;
+        gap: 2px;
+    }
+    .toolbar-text {
+        font-size: 0.7rem;
+    }
+}
+
+/* Button styling */
+#toolbar-add-to-queue-btn button {
+    font-size: 14px !important;
+    padding: 4px 16px !important;
+    height: 32px !important;
+    min-width: 80px !important;
+}
+.narrow-button {
+    min-width: 40px !important;
+    width: 40px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.gr-button-primary {
+    color: white;
+}
+
+/* Layout adjustments */
+body, .gradio-container {
+    padding-top: 42px !important; /* Adjusted for new toolbar height (36px - 10px) */
+}
+
+@media (max-width: 848px) {
+    body, .gradio-container {
+        padding-top: 48px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    body, .gradio-container {
+        padding-top: 22px !important; /* Adjusted for new toolbar height (32px - 10px) */
+    }
+}
+
+@media (max-width: 480px) {
+    body, .gradio-container {
+        padding-top: 18px !important; /* Adjusted for new toolbar height (28px - 10px) */
+    }
+}
+
+/* hide the gr.Video source selection bar for tb_input_video_component */
+#toolbox-video-player .source-selection {
+    display: none !important;
+}
+/* control sizing for gr.Video components */    
+.video-size video {
+    max-height: 60vh;
+    min-height: 300px !important;
+    object-fit: contain;
+}
+/* NEW: Closes the gap between input tabs and the pipeline accordion below them */
+#pipeline-controls-wrapper {
+    margin-top: -15px !important; /* Adjust this value to get the perfect "snug" fit */
+}
+/* --- NEW CSS RULE FOR GALLERY SCROLLING --- */
+#gallery-scroll-wrapper {
+    max-height: 600px; /* Set your desired fixed height */
+    overflow-y: auto;   /* Add a scrollbar only when needed */
+}
+#toolbox-start-pipeline-btn {
+    margin-top: -14px !important; /* Adjust this value to get the perfect alignment */
+}
+
+.control-group {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 12px 0;
+}
