@@ -172,11 +172,15 @@ def create_interface(
         }
         connect_generate_events(g, s, q, functions)
         connect_queue_events(q, g, functions, job_queue)
-        refresh_gallery = connect_outputs_events(o, tb_target_video_input, main_tabs_component)
+        get_gallery_items_fn = connect_outputs_events(o, tb_target_video_input, main_tabs_component)
         connect_settings_events(s, g, settings, create_latents_layout_update, tb_processor)
 
         # General Connections
-        block.load(fn=refresh_gallery, outputs=[o["thumbs"]])
+        def initial_gallery_load():
+            items = get_gallery_items_fn()
+            return items, gr.update(value=[item[0] for item in items])
+        
+        block.load(fn=initial_gallery_load, outputs=[o["gallery_items_state"], o["thumbs"]])
         g["current_job_id"].change(fn=monitor_fn, inputs=[g["current_job_id"]], outputs=[g["result_video"], g["preview_image"], g["top_preview_image"], g["progress_desc"], g["progress_bar"], g["start_button"], g["end_button"]]).then(fn=update_stats, outputs=[q["queue_status"], q["queue_stats_display"]]).then(fn=update_start_button_state, inputs=[g["model_type"], g["input_video"]], outputs=[g["start_button"], g["video_input_required_message"]]).then(fn=create_latents_layout_update, outputs=[g["top_preview_row"], g["preview_image"]])
         g["end_button"].click(fn=end_process_with_update, outputs=[q["queue_status"], q["queue_stats_display"], g["end_button"], g["current_job_id"]]).then(fn=check_for_current_job_and_monitor, outputs=[g["current_job_id"], g["result_video"], g["preview_image"], g["top_preview_image"], g["progress_desc"], g["progress_bar"], q["queue_status"], q["queue_stats_display"]]).then(fn=create_latents_layout_update, outputs=[g["top_preview_row"], g["preview_image"]])
         
